@@ -80,25 +80,48 @@ checkoutButton.addEventListener('click', () => {
 // 页面加载时渲染购物车
 renderCart();
 
-// 留言功能
 document.addEventListener('DOMContentLoaded', function () {
     const commentForm = document.getElementById('commentForm');
     const commentList = document.querySelector('#commentList ul');
 
+    // 1️⃣ 加载已保存的留言（从 localStorage）
+    const savedComments = JSON.parse(localStorage.getItem('comments')) || [];
+
+    savedComments.forEach(comment => {
+        addCommentToList(comment.name, comment.message, comment.time);
+    });
+
+    // 2️⃣ 提交留言
     commentForm.addEventListener('submit', function (e) {
         e.preventDefault();
 
         const name = document.getElementById('name').value.trim();
         const message = document.getElementById('message').value.trim();
+        const time = new Date().toLocaleString();
 
         if (name && message) {
-            const li = document.createElement('li');
-            const timestamp = new Date().toLocaleString();
-            li.innerHTML = `<strong>${name}</strong> <em>(${timestamp})</em><br>${message}`;
-            commentList.appendChild(li);
+            const newComment = { name, message, time };
+
+            // 添加到页面
+            addCommentToList(name, message, time);
+
+            // 保存到 localStorage
+            savedComments.push(newComment);
+            localStorage.setItem('comments', JSON.stringify(savedComments));
+
+            // 清空表单
             commentForm.reset();
         }
     });
+
+    // 3️⃣ 抽出函数用于添加到 DOM
+    function addCommentToList(name, message, time) {
+        const li = document.createElement('li');
+        li.innerHTML = `<strong>${name}</strong> <em>(${time})</em><br>${message}`;
+        commentList.appendChild(li);
+    }
 });
+
+
 
 
