@@ -5,11 +5,21 @@
     max-height: 200px;  /* 限制图片的最大高度 */
 }
 
-/* 控制产品容器的宽度，使其按行排列 */
 .product {
-    width: 30%;            /* 每个产品占用页面宽度的 30% */
-    margin: 10px;          /* 给每个产品之间添加间距 */
-    box-sizing: border-box; /* 确保宽度包含内边距和边框 */
+    width: 30%;
+    margin: 10px;
+    box-sizing: border-box;
+    padding: 15px;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 /* 商品展示区域 */
@@ -31,3 +41,4 @@
         width: 100%;         /* 在更小的屏幕上每个商品占 100% 宽度 */
     }
 }
+
