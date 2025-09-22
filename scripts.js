@@ -119,13 +119,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 🗑 清空留言按钮功能
     clearButton.addEventListener('click', function () {
-        if (confirm('Voulez-vous vraiment supprimer tous les messages ?')) {
+    const confirmClear = confirm('Voulez-vous vraiment supprimer tous les messages ?');
+
+    if (confirmClear) {
+        const password = prompt("Entrez le mot de passe pour supprimer les messages :");
+
+        if (password === "admin123") {
             localStorage.removeItem('comments');
             commentList.innerHTML = '';
-            savedComments.length = 0; // 清空数组内容
+            savedComments.length = 0;
+            alert("Les messages ont été supprimés.");
+        } else {
+            alert("Mot de passe incorrect !");
         }
-    });
+    }
 });
+
 
 
 
