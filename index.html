@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <!-- Firebase App (核心SDK) -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ma Boutique en Ligne</title>
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- ✅ Firebase 核心库 -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
-     <!-- Firebase Analytics -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics-compat.js" defer></script>
-
-    <script defer>
+    <script>
     const firebaseConfig = {
       apiKey: "AIzaSyAoOM2vbQx4m4tDjUHZmdLJEEE7rJuLHMk",
       authDomain: "product-page-f33c7.firebaseapp.com",
@@ -20,12 +24,9 @@
 
     firebase.initializeApp(firebaseConfig);
     firebase.analytics();
+    window.db = firebase.firestore(); // 👈 让 Firestore 可在 scripts.js 中访问
   </script>
     
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ma Boutique en Ligne</title>
-    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
@@ -101,6 +102,7 @@
     <script src="scripts.js?v=20250922.js"></script>
 </body>
 </html>
+
 
 
 
