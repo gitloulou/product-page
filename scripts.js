@@ -83,15 +83,16 @@ renderCart();
 document.addEventListener('DOMContentLoaded', function () {
     const commentForm = document.getElementById('commentForm');
     const commentList = document.querySelector('#commentList ul');
+    const clearButton = document.getElementById('clearComments');
 
-    // 1️⃣ 加载已保存的留言（从 localStorage）
+    // 加载已保存的留言
     const savedComments = JSON.parse(localStorage.getItem('comments')) || [];
 
     savedComments.forEach(comment => {
         addCommentToList(comment.name, comment.message, comment.time);
     });
 
-    // 2️⃣ 提交留言
+    // 提交留言
     commentForm.addEventListener('submit', function (e) {
         e.preventDefault();
 
@@ -102,34 +103,30 @@ document.addEventListener('DOMContentLoaded', function () {
         if (name && message) {
             const newComment = { name, message, time };
 
-            // 添加到页面
             addCommentToList(name, message, time);
-
-            // 保存到 localStorage
             savedComments.push(newComment);
             localStorage.setItem('comments', JSON.stringify(savedComments));
-
-            // 清空表单
             commentForm.reset();
         }
     });
 
-    // 3️⃣ 抽出函数用于添加到 DOM
+    // 添加留言到页面的函数
     function addCommentToList(name, message, time) {
         const li = document.createElement('li');
         li.innerHTML = `<strong>${name}</strong> <em>(${time})</em><br>${message}`;
         commentList.appendChild(li);
     }
+
+    // 🗑 清空留言按钮功能
+    clearButton.addEventListener('click', function () {
+        if (confirm('Voulez-vous vraiment supprimer tous les messages ?')) {
+            localStorage.removeItem('comments');
+            commentList.innerHTML = '';
+            savedComments.length = 0; // 清空数组内容
+        }
+    });
 });
 
-const clearButton = document.getElementById('clearComments');
-
-clearButton.addEventListener('click', function () {
-    if (confirm('Voulez-vous vraiment supprimer tous les messages ?')) {
-        localStorage.removeItem('comments');   // 删除本地保存的数据
-        commentList.innerHTML = '';            // 清空页面上留言
-    }
-});
 
 
 
