@@ -83,6 +83,7 @@ checkoutButton.addEventListener('click', () => {
 renderCart();
 
 document.addEventListener('DOMContentLoaded', function () {
+    console.log("📦 JS and DOM loaded！");
     const commentForm = document.getElementById('commentForm');
     const commentList = document.querySelector('#commentList ul');
     const clearButton = document.getElementById('clearComments');
@@ -137,6 +138,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
 
 
 
