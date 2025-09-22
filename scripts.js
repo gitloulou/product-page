@@ -85,6 +85,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const commentList = document.querySelector('#commentList ul');
     const clearButton = document.getElementById('clearComments');
 
+    // ✅ 抽出函数用于添加留言到页面
+    function addCommentToList(name, message, time) {
+        const li = document.createElement('li');
+        li.innerHTML = `<strong>${name}</strong> <em>(${time})</em><br>${message}`;
+        commentList.appendChild(li);
+    }
+
     // 加载已保存的留言
     const savedComments = JSON.parse(localStorage.getItem('comments')) || [];
 
@@ -109,14 +116,7 @@ document.addEventListener('DOMContentLoaded', function () {
             commentForm.reset();
         }
     });
-
-    // 添加留言到页面的函数
-    function addCommentToList(name, message, time) {
-        const li = document.createElement('li');
-        li.innerHTML = `<strong>${name}</strong> <em>(${time})</em><br>${message}`;
-        commentList.appendChild(li);
-    }
-
+    
     // 🗑 清空留言按钮功能
     clearButton.addEventListener('click', function () {
     const confirmClear = confirm('Voulez-vous vraiment supprimer tous les messages ?');
@@ -134,6 +134,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 });
+
 
 
 
