@@ -92,14 +92,14 @@ document.addEventListener('DOMContentLoaded', function () {
         commentList.appendChild(li);
     }
 
-    // 加载已保存的留言
+    // ✅ 加载本地保存的留言
     const savedComments = JSON.parse(localStorage.getItem('comments')) || [];
 
     savedComments.forEach(comment => {
         addCommentToList(comment.name, comment.message, comment.time);
     });
 
-    // 提交留言
+    // ✅ 提交留言表单
     commentForm.addEventListener('submit', function (e) {
         e.preventDefault();
 
@@ -116,24 +116,26 @@ document.addEventListener('DOMContentLoaded', function () {
             commentForm.reset();
         }
     });
-    
-    // 🗑 清空留言按钮功能
+
+    // ✅ 清空留言（需密码验证）
     clearButton.addEventListener('click', function () {
-    const confirmClear = confirm('Voulez-vous vraiment supprimer tous les messages ?');
+        const confirmClear = confirm('Voulez-vous vraiment supprimer tous les messages ?');
 
-    if (confirmClear) {
-        const password = prompt("Entrez le mot de passe pour supprimer les messages :");
+        if (confirmClear) {
+            const password = prompt("Entrez le mot de passe pour supprimer les messages :");
 
-        if (password === "admin123") {
-            localStorage.removeItem('comments');
-            commentList.innerHTML = '';
-            savedComments.length = 0;
-            alert("Les messages ont été supprimés.");
-        } else {
-            alert("Mot de passe incorrect !");
+            if (password === "admin123") {
+                localStorage.removeItem('comments');
+                commentList.innerHTML = '';
+                savedComments.length = 0;
+                alert("Les messages ont été supprimés.");
+            } else {
+                alert("Mot de passe incorrect !");
+            }
         }
-    }
+    });
 });
+
 
 
 
