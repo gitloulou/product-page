@@ -1,0 +1,33 @@
+/* 确保图片不会超出容器并保持宽高比 */
+.product img {
+    max-width: 100%;    /* 图片宽度最大为容器宽度 */
+    height: auto;       /* 保持宽高比 */
+    max-height: 200px;  /* 限制图片的最大高度 */
+}
+
+/* 控制产品容器的宽度，使其按行排列 */
+.product {
+    width: 30%;            /* 每个产品占用页面宽度的 30% */
+    margin: 10px;          /* 给每个产品之间添加间距 */
+    box-sizing: border-box; /* 确保宽度包含内边距和边框 */
+}
+
+/* 商品展示区域 */
+.products {
+    display: flex;             /* 使用 flexbox 布局 */
+    flex-wrap: wrap;           /* 如果空间不足，自动换行 */
+    justify-content: space-around; /* 在行之间添加间距 */
+}
+
+/* 响应式设计：小屏幕下调整布局 */
+@media (max-width: 768px) {
+    .product {
+        width: 45%;          /* 在较小的屏幕上每个商品占 45% 宽度 */
+    }
+}
+
+@media (max-width: 480px) {
+    .product {
+        width: 100%;         /* 在更小的屏幕上每个商品占 100% 宽度 */
+    }
+}
