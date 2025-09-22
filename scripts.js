@@ -79,3 +79,26 @@ checkoutButton.addEventListener('click', () => {
 
 // 页面加载时渲染购物车
 renderCart();
+
+// 留言功能
+document.addEventListener('DOMContentLoaded', function () {
+    const commentForm = document.getElementById('commentForm');
+    const commentList = document.querySelector('#commentList ul');
+
+    commentForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const name = document.getElementById('name').value.trim();
+        const message = document.getElementById('message').value.trim();
+
+        if (name && message) {
+            const li = document.createElement('li');
+            const timestamp = new Date().toLocaleString();
+            li.innerHTML = `<strong>${name}</strong> <em>(${timestamp})</em><br>${message}`;
+            commentList.appendChild(li);
+            commentForm.reset();
+        }
+    });
+});
+
+
