@@ -84,60 +84,94 @@ renderCart();
 
 document.addEventListener('DOMContentLoaded', function () {
     console.log("📦 JS and DOM loaded！");
+
     const commentForm = document.getElementById('commentForm');
     const commentList = document.querySelector('#commentList ul');
     const clearButton = document.getElementById('clearComments');
 
-    // ✅ 抽出函数用于添加留言到页面
+    // 显示评论到页面
     function addCommentToList(name, message, time) {
         const li = document.createElement('li');
         li.innerHTML = `<strong>${name}</strong> <em>(${time})</em><br>${message}`;
         commentList.appendChild(li);
     }
 
-    // ✅ 加载本地保存的留言
-    const savedComments = JSON.parse(localStorage.getItem('comments')) || [];
+    // 从 Firestore 读取评论
+    function loadComments() {
+        commentList.innerHTML = ''; // 清空列表
+        db.collection('comments')
+          .orderBy('time', 'desc')
+          .get()
+          .then(snapshot => {
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                addCommentToList(data.name, data.message, new Date(data.time).toLocaleString());
+            });
+          })
+          .catch(error => {
+            console.error("Erreur lors du chargement des commentaires : ", error);
+          });
+    }
 
-    savedComments.forEach(comment => {
-        addCommentToList(comment.name, comment.message, comment.time);
-    });
+    loadComments();
 
-    // ✅ 提交留言表单
+    // 提交评论到 Firestore
     commentForm.addEventListener('submit', function (e) {
         e.preventDefault();
 
         const name = document.getElementById('name').value.trim();
         const message = document.getElementById('message').value.trim();
-        const time = new Date().toLocaleString();
+        const time = Date.now();
 
         if (name && message) {
-            const newComment = { name, message, time };
-
-            addCommentToList(name, message, time);
-            savedComments.push(newComment);
-            localStorage.setItem('comments', JSON.stringify(savedComments));
-            commentForm.reset();
+            db.collection('comments').add({
+                name: name,
+                message: message,
+                time: time
+            }).then(() => {
+                addCommentToList(name, message, new Date(time).toLocaleString());
+                commentForm.reset();
+            }).catch(error => {
+                alert('Erreur lors de l\'ajout du commentaire.');
+                console.error(error);
+            });
         }
     });
 
-    // ✅ 清空留言（需密码验证）
-    clearButton.addEventListener('click', function () {
+    // 清空留言需要权限 — 这里改成清空 Firestore 的 comments 集合（要小心用）
+    clearButton.addEventListener('click', async function () {
         const confirmClear = confirm('Voulez-vous vraiment supprimer tous les messages ?');
 
-        if (confirmClear) {
-            const password = prompt("Entrez le mot de passe pour supprimer les messages :");
+        if (!confirmClear) return;
 
-            if (password === "admin123") {
-                localStorage.removeItem('comments');
-                commentList.innerHTML = '';
-                savedComments.length = 0;
-                alert("Les messages ont été supprimés.");
-            } else {
-                alert("Mot de passe incorrect !");
-            }
+        const password = prompt("Entrez le mot de passe pour supprimer les messages :");
+
+        if (password !== "admin123") {
+            alert("Mot de passe incorrect !");
+            return;
+        }
+
+        // 读取所有文档并删除
+        try {
+            const snapshot = await db.collection('comments').get();
+            const batch = db.batch();
+
+            snapshot.forEach(doc => {
+                batch.delete(doc.ref);
+            });
+
+            await batch.commit();
+
+            commentList.innerHTML = '';
+            alert("Les messages ont été supprimés.");
+        } catch (error) {
+            alert("Erreur lors de la suppression des messages.");
+            console.error(error);
         }
     });
 });
+
+
 
 
 
