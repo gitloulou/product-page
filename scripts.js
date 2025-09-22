@@ -1,3 +1,5 @@
+console.log("📦 JS load！");
+
 // 获取页面中的元素
 const addToCartButtons = document.querySelectorAll('.add-to-cart');
 const cartButton = document.getElementById('cartButton');
@@ -135,6 +137,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
 
 
 
