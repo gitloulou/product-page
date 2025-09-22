@@ -193,6 +193,61 @@ button {
     }
 }
 
+.comment-section {
+    background-color: #fff;
+    padding: 20px;
+    margin: 30px auto;
+    max-width: 600px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.comment-section h2,
+.comment-section h3 {
+    color: #ff69b4;
+    margin-bottom: 15px;
+}
+
+#commentForm input,
+#commentForm textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+#commentForm button {
+    background-color: #ff69b4;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#commentForm button:hover {
+    background-color: #ff1493;
+}
+
+#commentList ul {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 20px;
+}
+
+#commentList li {
+    background-color: #f2f2f2;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+}
+
+
+
 
 
 
