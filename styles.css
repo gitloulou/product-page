@@ -12,21 +12,11 @@
     box-sizing: border-box; /* 确保宽度包含内边距和边框 */
 }
 
-.product {
-    width: 30%;
-    margin: 10px;
-    box-sizing: border-box;
-    padding: 15px;
-    border: 1px solid #eee;
-    border-radius: 10px;
-    background-color: #fff;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.product:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+商品展示区域
+.products {
+    display: flex;             /* 使用 flexbox 布局 */
+    flex-wrap: wrap;           /* 如果空间不足，自动换行 */
+    justify-content: space-around; /* 在行之间添加间距 */
 }
 
 button {
@@ -56,6 +46,7 @@ button:hover {
         width: 100%;         /* 在更小的屏幕上每个商品占 100% 宽度 */
     }
 }
+
 
 
 
