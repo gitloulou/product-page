@@ -1,11 +1,33 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    <!-- Firebase App (核心SDK) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js" defer></script>
+
+     <!-- Firebase Analytics -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics-compat.js" defer></script>
+
+    <script defer>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAoOM2vbQx4m4tDjUHZmdLJEEE7rJuLHMk",
+      authDomain: "product-page-f33c7.firebaseapp.com",
+      projectId: "product-page-f33c7",
+      storageBucket: "product-page-f33c7.appspot.com",
+      messagingSenderId: "358942870166",
+      appId: "1:358942870166:web:f0ceae868b48aa4f54d0b7",
+      measurementId: "G-BVT3Z6EGGK"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+  </script>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ma Boutique en Ligne</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <header>
         <h1>Bienvenue dans ma boutique en ligne !</h1>
@@ -19,7 +41,7 @@
             <img src="images/1000005795.jpg" alt="stylo 10 couleur" loading="lazy">
             <h2>stylo 10 couleur</h2>
             <p>Prix: €2.50</p>
-            <button class="add-to-cart" data-name="stylo 10 couleur" data-price="2,5">Ajouter au panier</button>
+            <button class="add-to-cart" data-name="stylo 10 couleur" data-price="2.5">Ajouter au panier</button>
         </div>
 
         <div class="product">
@@ -79,6 +101,7 @@
     <script src="scripts.js?v=20250922.js"></script>
 </body>
 </html>
+
 
 
 
