@@ -122,6 +122,17 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
+const clearButton = document.getElementById('clearComments');
+
+clearButton.addEventListener('click', function () {
+    if (confirm('Voulez-vous vraiment supprimer tous les messages ?')) {
+        localStorage.removeItem('comments');   // 删除本地保存的数据
+        commentList.innerHTML = '';            // 清空页面上留言
+    }
+});
+
+
+
 
 
 
