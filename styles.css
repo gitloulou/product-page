@@ -67,7 +67,7 @@ footer {
     background-color: #fafafa;
     border-radius: 6px;
     margin-bottom: 10px;
-    filter: brightness(1.5) contrast(1.1) saturate(1.1);  /* 数值大于 1 是调亮，小于 1 是调暗 */
+    filter: brightness(1.2) contrast(1.1) saturate(1.1);  /* 数值大于 1 是调亮，小于 1 是调暗 */
 }
 
 .product h2 {
@@ -192,6 +192,7 @@ button {
         right: 10px;
     }
 }
+
 
 
 
