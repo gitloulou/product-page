@@ -93,8 +93,10 @@ document.addEventListener('DOMContentLoaded', function () {
     function addCommentToList(id, name, message, time) {
         const li = document.createElement('li');
         li.innerHTML = `
-            <strong>${name}</strong> <em>(${time})</em><br>${message}
-            <button class="delete-comment" data-id="${id}">❌ Supprimer</button>
+            <div class="comment-content">
+                 <strong>${name}</strong> <em>(${time})</em><br>${message}
+             </div>
+             <button class="delete-comment" data-id="${id}">❌</button>
         `;
         commentList.appendChild(li);
 
@@ -187,6 +189,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
 
 
 
