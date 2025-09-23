@@ -89,11 +89,35 @@ document.addEventListener('DOMContentLoaded', function () {
     const commentList = document.querySelector('#commentList ul');
     const clearButton = document.getElementById('clearComments');
 
-    // 显示评论到页面
-    function addCommentToList(name, message, time) {
+    // 显示评论到页面（带文档ID）
+    function addCommentToList(id, name, message, time) {
         const li = document.createElement('li');
-        li.innerHTML = `<strong>${name}</strong> <em>(${time})</em><br>${message}`;
+        li.innerHTML = `
+            <strong>${name}</strong> <em>(${time})</em><br>${message}
+            <button class="delete-comment" data-id="${id}">❌ Supprimer</button>
+        `;
         commentList.appendChild(li);
+
+        // 删除单条评论
+        li.querySelector('.delete-comment').addEventListener('click', async () => {
+            const confirmDelete = confirm('Voulez-vous vraiment supprimer ce message ?');
+            if (!confirmDelete) return;
+
+            const password = prompt("Entrez le mot de passe pour supprimer ce message :");
+            if (password !== "admin123") {
+                alert("Mot de passe incorrect !");
+                return;
+            }
+
+            try {
+                await db.collection('comments').doc(id).delete();
+                li.remove();
+                alert("Message supprimé !");
+            } catch (error) {
+                console.error(error);
+                alert("Erreur lors de la suppression du message.");
+            }
+        });
     }
 
     // 从 Firestore 读取评论
@@ -103,13 +127,13 @@ document.addEventListener('DOMContentLoaded', function () {
           .orderBy('time', 'desc')
           .get()
           .then(snapshot => {
-            snapshot.forEach(doc => {
-                const data = doc.data();
-                addCommentToList(data.name, data.message, new Date(data.time).toLocaleString());
-            });
+              snapshot.forEach(doc => {
+                  const data = doc.data();
+                  addCommentToList(doc.id, data.name, data.message, new Date(data.time).toLocaleString());
+              });
           })
           .catch(error => {
-            console.error("Erreur lors du chargement des commentaires : ", error);
+              console.error("Erreur lors du chargement des commentaires : ", error);
           });
     }
 
@@ -128,8 +152,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 name: name,
                 message: message,
                 time: time
-            }).then(() => {
-                addCommentToList(name, message, new Date(time).toLocaleString());
+            }).then(docRef => {
+                addCommentToList(docRef.id, name, message, new Date(time).toLocaleString());
                 commentForm.reset();
             }).catch(error => {
                 alert('Erreur lors de l\'ajout du commentaire.');
@@ -138,38 +162,32 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // 清空留言需要权限 — 这里改成清空 Firestore 的 comments 集合（要小心用）
+    // 清空留言（批量删除）
     clearButton.addEventListener('click', async function () {
         const confirmClear = confirm('Voulez-vous vraiment supprimer tous les messages ?');
-
         if (!confirmClear) return;
 
         const password = prompt("Entrez le mot de passe pour supprimer les messages :");
-
         if (password !== "admin123") {
             alert("Mot de passe incorrect !");
             return;
         }
 
-        // 读取所有文档并删除
         try {
             const snapshot = await db.collection('comments').get();
             const batch = db.batch();
-
-            snapshot.forEach(doc => {
-                batch.delete(doc.ref);
-            });
-
+            snapshot.forEach(doc => batch.delete(doc.ref));
             await batch.commit();
 
             commentList.innerHTML = '';
-            alert("Les messages ont été supprimés.");
+            alert("Tous les messages ont été supprimés.");
         } catch (error) {
-            alert("Erreur lors de la suppression des messages.");
             console.error(error);
+            alert("Erreur lors de la suppression des messages.");
         }
     });
 });
+
 
 
 
